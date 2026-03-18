@@ -3,7 +3,7 @@ import User from "../../models/userModel.js";
 import createToken from "../../common/token.js";
 
 const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req?.body;
     const user = await User.findOne({ email });
     if (!user){
         return res.status(401).json({ status: false, message: "Invalid email or password." });

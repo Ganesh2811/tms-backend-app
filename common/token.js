@@ -6,7 +6,7 @@ const createToken = async (res, userId) => {
         expiresIn: "1d",
     });
 
-    await redisClient.set(`token: ${userId}`, token, { EX: 60 * 60 * 24 })
+    await redisClient.set(`token:${userId}`, token, { EX: 60 * 60 * 24 })
 
     res.cookie("token", token, {
         httpOnly: true,

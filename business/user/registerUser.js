@@ -14,7 +14,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (user) {
         isAdmin ? await createToken(res, user?._id) : null;
         user.password = undefined;
-        res.status(201).json(user);
+        res.status(200).json(user);
     } else {
         return res.status(400).json({ status: false, message: "Invalid user data" });
     }
