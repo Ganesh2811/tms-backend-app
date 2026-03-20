@@ -5,7 +5,7 @@ import redisClient from "../common/redisClient.js";
 
 
 const protectRoute = asyncHandler(async (req, res, next) => {
-    let token = req?.cookies?.token;
+    let token = req.cookies?.token;
     if (token) {
         try {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);

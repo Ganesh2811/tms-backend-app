@@ -1,17 +1,15 @@
-import asyncHandler from "express-async-handler";
 import Task from "../../models/taskModel.js";
 import Notice from "../../models/notificationModel.js";
 
-const duplicateTask = asyncHandler(async (req, res) => {
+const duplicateTask = async (req, res) => {
     try {
         const { id } = req.params;
         const { userId } = req.user;
-
         const task = await Task.findById(id);
 
         //alert users of the task
         let text = "New task has been assigned to you";
-        if (team.team?.length > 1) {
+        if (task.team?.length > 1) {
             text = text + ` and ${task.team?.length - 1} others.`;
         }
 
@@ -43,17 +41,16 @@ const duplicateTask = asyncHandler(async (req, res) => {
         newTask.description = task.description;
 
         await newTask.save();
-
         await Notice.create({
             team: newTask.team,
             text,
             task: newTask._id,
         });
 
-        res .status(200).json({ status: true, message: "Task duplicated successfully." });
+        res.status(200).json({ status: true, message: "Task duplicated successfully." });
     } catch (error) {
-        return res.status(500).json({ status: false, message: error.message });
+        return res.status(400).json({ status: false, message: error.message });
     }
-});
+};
 
 export default duplicateTask;

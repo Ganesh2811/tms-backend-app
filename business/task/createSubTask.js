@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Task from "../../models/taskModel.js";
 
-const createSubTask = asyncHandler(async (req, res) => {
+const createSubTask = async (req, res) => {
     const { title, tag, date } = req.body;
     const { id } = req.params;
 
@@ -23,5 +23,5 @@ const createSubTask = asyncHandler(async (req, res) => {
     } catch (error) {
         return res.status(400).json({ status: false, message: error.message });
     }
-});
+};
 export default createSubTask;
