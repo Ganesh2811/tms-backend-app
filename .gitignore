@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # Package Lock Json
 package-lock.json
+
+# build folder
+build/
