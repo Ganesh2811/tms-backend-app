@@ -7,7 +7,7 @@ module.exports = {
     entry: path.resolve(__dirname, "app.js"),
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "app.js",
+        filename: "app.cjs",
     },
     module: {
         rules: [

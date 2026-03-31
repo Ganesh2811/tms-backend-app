@@ -143,3 +143,4 @@ package-lock.json
 
 # build folder
 build/
+tms-app-build/
