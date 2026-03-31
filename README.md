@@ -6,3 +6,5 @@ docker start redis-server
 docker stop redis-server
 docker ps -a
 docker version
+docker build -t tms-backend-app .
+docker run -p 8800:8800 --env-file .env tms-backend-app
