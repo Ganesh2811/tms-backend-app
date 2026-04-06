@@ -5,7 +5,7 @@ import User from "../../models/userModel.js";
 import { generateTaskDescription } from "../../common/aiService.js";
 
 
-const createTask = asyncHandler(async (req, res) => {
+const createTask = async (req, res) => {
     try {
         const { userId } = req.user;
         const { title, team, stage, date, priority, assets, links, description } = req.body;
@@ -32,7 +32,10 @@ const createTask = asyncHandler(async (req, res) => {
         if (links) {
             newLinks = links?.split(",");
         }
-        const aiDescription = await generateTaskDescription(title);
+
+        let aiDescription = await generateTaskDescription(title);
+        let finalDescription = description ? `${description}\n\nAI Suggestion: ${aiDescription}` : aiDescription;
+
         const task = await Task.create({
             title,
             team,
@@ -42,7 +45,7 @@ const createTask = asyncHandler(async (req, res) => {
             assets,
             activities: activity,
             links: newLinks || [],
-            description: aiDescription
+            description: finalDescription
         });
 
         await Notice.create({
@@ -68,6 +71,6 @@ const createTask = asyncHandler(async (req, res) => {
         console.log(error);
         return res.status(500).json({ status: false, message: error.message });
     }
-});
+};
 
 export default createTask;
