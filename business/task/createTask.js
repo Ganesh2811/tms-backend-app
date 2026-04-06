@@ -2,6 +2,8 @@ import asyncHandler from "express-async-handler";
 import Task from "../../models/taskModel.js";
 import Notice from "../../models/notificationModel.js";
 import User from "../../models/userModel.js";
+import { generateTaskDescription } from "../../common/aiService.js";
+
 
 const createTask = asyncHandler(async (req, res) => {
     try {
@@ -30,7 +32,7 @@ const createTask = asyncHandler(async (req, res) => {
         if (links) {
             newLinks = links?.split(",");
         }
-
+        const aiDescription = await generateTaskDescription(title);
         const task = await Task.create({
             title,
             team,
@@ -40,7 +42,7 @@ const createTask = asyncHandler(async (req, res) => {
             assets,
             activities: activity,
             links: newLinks || [],
-            description,
+            description: aiDescription
         });
 
         await Notice.create({
