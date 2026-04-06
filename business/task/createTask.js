@@ -2,8 +2,8 @@ import asyncHandler from "express-async-handler";
 import Task from "../../models/taskModel.js";
 import Notice from "../../models/notificationModel.js";
 import User from "../../models/userModel.js";
-import { generateTaskDescription } from "../../common/aiService.js";
-
+// import { generateTaskDescription } from "../../common/aiService.js";
+import { generateTaskDescription } from "../../common/hfService.js";
 
 const createTask = async (req, res) => {
     try {
@@ -35,7 +35,6 @@ const createTask = async (req, res) => {
 
         let aiDescription = await generateTaskDescription(title);
         let finalDescription = description ? `${description}\n\nAI Suggestion: ${aiDescription}` : aiDescription;
-
         const task = await Task.create({
             title,
             team,
