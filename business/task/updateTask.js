@@ -17,11 +17,13 @@ const updateTask = asyncHandler(async (req, res) => {
             newLinks = links.split(",");
         }
         let finalDescription = task.description;
-        if(description){
+        if (description) {
             const aiDescription = await generateTaskDescription(description);
             finalDescription = `${description}\n\nAI Suggestion: ${aiDescription}`;
         }
-        
+        else if (!task.description && title) {
+            finalDescription = await generateTaskDescription(title);
+        }
         if (title) task.title = title;
         if(date) task.date = date;
         if(priority) task.priority = priority.toLowerCase();
